@@ -71,6 +71,23 @@ export class AppComponent implements OnInit {
     );
   }
 
+  public searchEmployees(key: string): void {
+    console.log(key);
+    const results: Array<Employee> = [];
+    for (const employee of this.employees) {
+      if (employee.name.toLocaleLowerCase().indexOf(key.toLocaleLowerCase()) > -1
+      || employee.email.toLocaleLowerCase().indexOf(key.toLocaleLowerCase()) > -1
+      || employee.phone.toLocaleLowerCase().indexOf(key.toLocaleLowerCase()) > -1
+      || employee.jobTitle.toLocaleLowerCase().indexOf(key.toLocaleLowerCase()) > -1) {
+        results.push(employee);
+      }
+    }
+    this.employees = results;
+    if (results.length === 0 || !key) {
+      this.getEmployees();
+    }
+  }
+
   public onOpenModal(employee: Employee, mode: string): void {
     const container = document.getElementById('main-container');
     const button = document.createElement('button');
